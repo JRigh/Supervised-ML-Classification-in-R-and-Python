@@ -41,20 +41,33 @@ X = iris.iloc[:, 0:4]
 y = iris.iloc[:, 4]
 class_names = iris.iloc[:, 5]
 
-from sklearn.model_selection import train_test_split
-import random
+X = iris.iloc[:, 0:4]
+y = iris.iloc[:, 4]
+class_names = iris.iloc[:, 5]
 
-random.seed(2023)
-X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=40, train_size = 0.7)
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=100, train_size = 0.7)
+
+# reconstruction of the training and testing datasets
+training_df = pd.DataFrame(data = np.column_stack((X_train,y_train)), 
+                           index = X_train.index, 
+                           columns = iris.columns[iris.columns!= 'species'] )
+
+testing_df = pd.DataFrame(data = np.column_stack((X_test,y_test)), 
+                           index = X_test.index, 
+                           columns = iris.columns[iris.columns!= 'species'] )
 
 # 2.1 save a copy of the datasets in .csv
 # save a copy of the datasets in .csv
+# 2. save entire dataset, training and testing datasets
+# save a copy of the dataset in .csv
 iris.to_csv('C:/Users/julia/OneDrive/Desktop/github/24. Machine learning toolbox Python/iris.csv', index=False)
 
-iris.to_csv('C:/Users/julia/OneDrive/Desktop/github/24. Machine learning toolbox Python/iris_training.csv',
+training_df.to_csv('C:/Users/julia/OneDrive/Desktop/github/24. Machine learning toolbox Python/iris_training.csv',
           index = False)
 
-iris.to_csv('C:/Users/julia/OneDrive/Desktop/github/24. Machine learning toolbox Python/iris_testing.csv',
+testing_df.to_csv('C:/Users/julia/OneDrive/Desktop/github/24. Machine learning toolbox Python/iris_testing.csv',
           index = False)
 
 #--------------------------
